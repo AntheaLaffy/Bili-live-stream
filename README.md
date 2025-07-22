@@ -24,12 +24,20 @@ python bili-live-stream.py
 ## 开发者文档
 原理：使用哔哩哔哩的api调取必要参数，拼接形成url
 - api接口
-  房间基本信息接口：https://api.live.bilibili.com/room/v1/Room/get_info                     👉房间标题，ID
-  主播信息接口：https://api.live.bilibili.com/live_user/v1/UserInfo/get_anchor_in_room      👉主播名称，ID
-  支持参数：房间号（必填）
+
+房间基本信息接口：https://api.live.bilibili.com/room/v1/Room/get_info
+
+  👉返回 {房间标题}，{房间ID}
   
-  视频流接口：https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo        👉返回嵌套字典结构：协议 -> 格式 -> 编码 -> URL列表
-  支持参数:
+主播信息接口：https://api.live.bilibili.com/live_user/v1/UserInfo/get_anchor_in_room
+
+  👉返回 {主播名称}，{主播ID}
+  
+视频流接口：https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo
+
+  👉返回嵌套字典结构：{协议} -> {格式} -> {编码} -> {URL列表}
+
+支持参数:
   > protocol：流协议（HTTP流/HLS）
   > 
   > format：格式（FLV/TS/FMP4）
