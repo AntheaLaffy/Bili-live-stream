@@ -31,7 +31,10 @@ python bili-live-stream.py
   视频流接口：https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo        👉返回嵌套字典结构：协议 -> 格式 -> 编码 -> URL列表
   支持参数:
   > protocol：流协议（HTTP流/HLS）
+  > 
   > format：格式（FLV/TS/FMP4）
+  > 
   > codec：编码（H.264/H.265）
+  > 
   > qn=10000：原画清晰度
   
