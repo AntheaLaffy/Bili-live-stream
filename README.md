@@ -17,7 +17,9 @@
 pip install requests
 ```
 #### 运行程序
+```bash
 python bili-live-stream.py
+```
 
 ## 开发者文档
 原理：使用哔哩哔哩的api调取必要参数，拼接形成url
