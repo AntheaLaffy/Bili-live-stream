@@ -1,17 +1,12 @@
-# Bilibili 直播流获取 API 文档
+#  API 文档
+- 如果你的项目需要这个功能
+- 且不想自己写代码的的话可以直接使用我的脚本
 
-## 核心函数
+## API核心函数
 
 ```python
 def get_stream_info(room_id, qn=10000, include_urls=True, include_metadata=True):
-    """
-    获取直播流详细信息
-    :param room_id: 直播间ID
-    :param qn: 清晰度 (默认10000=原画)
-    :param include_urls: 是否包含URL列表
-    :param include_metadata: 是否包含元数据
-    :return: 包含直播流详细信息的字典
-    """
+
 ```
 
 ## 参数说明
@@ -23,54 +18,6 @@ def get_stream_info(room_id, qn=10000, include_urls=True, include_metadata=True)
 | include_urls | bool | True | 是否在返回结果中包含扁平化的 URL 列表 |
 | include_metadata | bool | True | 是否包含完整的直播流元数据 |
 
-## 返回值结构
-
-### 成功响应示例
-```json
-{
-  "room_info": {
-    "room_id": 123456,
-    "title": "直播间标题",
-    "uname": "主播名称",
-    "uid": "主播UID",
-    "live_status": 1
-  },
-  "urls": [
-    "https://.../index.m3u8?expires=...",
-    "https://.../index.flv?expires=..."
-  ],
-  "streams_metadata": {
-    "http_stream": {
-      "flv": {
-        "h264": [
-          {
-            "url": "完整URL",
-            "expires": 1734567890
-          }
-        ]
-      }
-    }
-  },
-  "streams": [
-    {
-      "index": 1,
-      "protocol": "http_stream",
-      "format": "flv",
-      "codec": "h264",
-      "url": "https://.../index.flv?expires=...",
-      "expires": 1734567890,
-      "expires_time": "2025-07-23 12:34:56"
-    }
-  ]
-}
-```
-
-### 错误响应示例
-```json
-{
-  "error": "错误描述"
-}
-```
 
 ## 字段说明
 
@@ -128,6 +75,7 @@ else:
     for i, url in enumerate(result["urls"], 1):
         print(f"{i}. {url}")
 ```
+
 
 ## 清晰度参考(qn参数)
 
