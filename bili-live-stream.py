@@ -169,6 +169,77 @@ def display_streams(streams_data):
                     
                     print(f"{i}. {url}{expires_info}")
 
+    #   外来api调用 -   7/23
+def get_stream_info(room_id, qn=10000, include_urls=True, include_metadata=True):
+    """
+    获取直播流详细信息
+    :param room_id: 直播间ID
+    :param qn: 清晰度 (默认10000=原画)
+    :param include_urls: 是否包含URL列表
+    :param include_metadata: 是否包含元数据
+    :return: 包含直播流详细信息的字典
+    """
+    # 检查房间状态
+    room_info = get_room_info(room_id)
+    if not room_info:
+        return {"error": "无法获取房间信息"}
+    
+    # 检查直播状态
+    if room_info.get("live_status") != 1:
+        return {"error": f"房间 {room_id} 当前未在直播"}
+    
+    # 获取直播流数据
+    streams_data = get_all_streams(room_id, qn)
+    if not streams_data:
+        return {"error": "无法获取直播流数据"}
+    
+    # 构建结果字典
+    result = {
+        "room_info": {
+            "room_id": room_info.get("room_id"),
+            "title": room_info.get("title"),
+            "uname": room_info.get("uname"),
+            "uid": room_info.get("uid"),
+            "live_status": room_info.get("live_status")
+        }
+    }
+    
+    # 包含URL列表
+    if include_urls:
+        url_list = []
+        for protocol, formats in streams_data.items():
+            for format_name, codecs in formats.items():
+                for codec, urls in codecs.items():
+                    for url_info in urls:
+                        if url_info["url"]:
+                            url_list.append(url_info["url"])
+        result["urls"] = url_list
+    
+    # 包含完整元数据
+    if include_metadata:
+        result["streams_metadata"] = streams_data
+    
+    # 提取关键参数
+    key_params = []
+    for protocol, formats in streams_data.items():
+        for format_name, codecs in formats.items():
+            for codec, urls in codecs.items():
+                for i, url_info in enumerate(urls):
+                    params = {
+                        "index": i + 1,
+                        "protocol": protocol,
+                        "format": format_name,
+                        "codec": codec,
+                        "url": url_info["url"],
+                        "expires": url_info.get("expires"),
+                        "expires_time": datetime.fromtimestamp(url_info["expires"]).strftime("%Y-%m-%d %H:%M:%S") if url_info.get("expires") else None
+                    }
+                    key_params.append(params)
+    
+    result["streams"] = key_params
+    
+    return result
+
 def main():
     try:
         print("Bilibili直播流抓取工具")
