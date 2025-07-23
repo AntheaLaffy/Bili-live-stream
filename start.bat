@@ -1,1 +1,1 @@
-python bili-live-stream.py
+python bili_live_stream.py
